@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tetris</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <!-- New Game Modal -->
+    <div class="modal-overlay" id="new-game-modal">
+        <div class="modal-content">
+            <h2>New Game</h2>
+            
+            <div class="modal-section">
+                <h3>Game Speed</h3>
+                <div class="speed-selector">
+                    <div class="speed-option" data-speed="1">Normal</div>
+                    <div class="speed-option" data-speed="2">Fast</div>
+                    <div class="speed-option" data-speed="3">Insane</div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h3>Color Theme</h3>
+                <div class="theme-selector">
+                    <div class="theme-option" data-theme="classic">
+                        <div class="theme-preview classic-theme"></div>
+                        <span>Classic</span>
+                    </div>
+                    <div class="theme-option" data-theme="neon">
+                        <div class="theme-preview neon-theme"></div>
+                        <span>Neon</span>
+                    </div>
+                    <div class="theme-option" data-theme="ocean">
+                        <div class="theme-preview ocean-theme"></div>
+                        <span>Ocean</span>
+                    </div>
+                    <div class="theme-option" data-theme="forest">
+                        <div class="theme-preview forest-theme"></div>
+                        <span>Forest</span>
+                    </div>
+                    <div class="theme-option" data-theme="sunset">
+                        <div class="theme-preview sunset-theme"></div>
+                        <span>Sunset</span>
+                    </div>
+                    <div class="theme-option" data-theme="midnight">
+                        <div class="theme-preview midnight-theme"></div>
+                        <span>Midnight</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-buttons">
+                <button id="start-new-game-btn" class="modal-btn primary">Start Game</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="game-container">
+        <div class="game-info">
+            <h1>Tetris</h1>
+            <div class="level-info">
+                <div>Score: <span id="score">0</span> | Level: <span id="level">1</span></div>
+                <div class="lines-info">
+                    <div>Level Lines: <span id="level-lines">0</span>/<span id="next-level">10</span></div>
+                    <div>Total Lines: <span id="total-lines">0</span></div>
+                </div>
+            </div>
+            <div class="next-pieces">
+                <h3>Next Pieces:</h3>
+                <div id="next-pieces-container"></div>
+            </div>
+            <div class="game-controls">
+                <button id="startBtn">Start</button>
+                <button id="pauseBtn" disabled>Pause</button>
+                <button id="endBtn" disabled>Quit</button>
+            </div>
+            <!---
+            <div class="instructions">
+                <p>Use arrow keys to play:</p>
+                <p>← → : Move left/right</p>
+                <p>↓ : Move down</p>
+                <p>↑ : Rotate</p>
+            </div>
+            --->
+        </div>
+        <div class="game-board-container">
+            <div class="game-board" id="board"></div>
+            <div class="game-over-overlay" id="game-over-overlay">
+                <div class="game-over-text">GAME OVER</div>
+                <div class="high-score-form" id="high-score-form" style="display: none;">
+                    <p>New High Score!</p>
+                    <input type="text" id="player-name" placeholder="Enter your name" maxlength="20">
+                    <button onclick="submitHighScore()">Submit Score</button>
+                </div>
+                <div class="high-scores" id="high-scores">
+                    <h2>High Scores</h2>
+                    <div id="high-scores-list"></div>
+                </div>
+            </div>
+            <div class="pause-overlay" id="pause-overlay">
+                <div class="pause-text">PAUSED</div>
+            </div>
+        </div>
+    </div>
+
+    <form id="move-form" method="POST" action="/move" style="display: none;">
+        <input type="hidden" name="direction" id="direction-input">
+    </form>
+
+    <script src="{{ url_for('static', filename='js/tetris.js') }}"></script>
+</body>
+</html> 

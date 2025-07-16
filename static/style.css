@@ -1,0 +1,740 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Variables for Color Themes */
+:root {
+    /* Classic Theme (Default) */
+    --primary-color: #4CAF50;
+    --secondary-color: #45a049;
+    --background-color: #f0f0f0;
+    --container-bg: white;
+    --text-color: #333;
+    --board-bg: #000;
+    --board-border: #333;
+}
+
+/* Neon Theme */
+.neon-theme {
+    --primary-color: #ff00ff;
+    --secondary-color: #cc00cc;
+    --background-color: #0a0a0a;
+    --container-bg: #1a1a1a;
+    --text-color: #00ffff;
+    --board-bg: #000;
+    --board-border: #ff00ff;
+}
+
+/* Ocean Theme */
+.ocean-theme {
+    --primary-color: #2196F3;
+    --secondary-color: #1976D2;
+    --background-color: #e3f2fd;
+    --container-bg: #ffffff;
+    --text-color: #0d47a1;
+    --board-bg: #001f3f;
+    --board-border: #2196F3;
+}
+
+/* Forest Theme */
+.forest-theme {
+    --primary-color: #4CAF50;
+    --secondary-color: #388E3C;
+    --background-color: #f1f8e9;
+    --container-bg: #ffffff;
+    --text-color: #1b5e20;
+    --board-bg: #2e7d32;
+    --board-border: #4caf50;
+}
+
+/* Sunset Theme */
+.sunset-theme {
+    --primary-color: #FF9800;
+    --secondary-color: #F57C00;
+    --background-color: #fff3e0;
+    --container-bg: #ffffff;
+    --text-color: #e65100;
+    --board-bg: #3e2723;
+    --board-border: #ff9800;
+}
+
+/* Midnight Theme */
+.midnight-theme {
+    --primary-color: #9C27B0;
+    --secondary-color: #7B1FA2;
+    --background-color: #1a1a1a;
+    --container-bg: #2a2a2a;
+    --text-color: #e1bee7;
+    --board-bg: #000;
+    --board-border: #9c27b0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-color);
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--container-bg);
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+.modal-content h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+}
+
+.modal-section {
+    margin-bottom: 2rem;
+}
+
+.modal-section h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.speed-selector {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    background-color: #e0e0e0;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.speed-selector .speed-option {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #666;
+    border: 2px solid transparent;
+}
+
+.speed-selector .speed-option:hover {
+    background-color: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+.speed-selector .speed-option.active {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--secondary-color);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.theme-selector {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.theme-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.theme-option:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.theme-option.active {
+    border-color: var(--primary-color);
+    background-color: rgba(76, 175, 80, 0.1);
+}
+
+.theme-preview {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+    border: 2px solid #ddd;
+    position: relative;
+    overflow: hidden;
+}
+
+.theme-preview::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.theme-preview::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+}
+
+.classic-theme {
+    background: linear-gradient(45deg, #4CAF50, #45a049);
+}
+
+.neon-theme {
+    background: linear-gradient(45deg, #ff00ff, #00ffff);
+}
+
+.ocean-theme {
+    background: linear-gradient(45deg, #2196F3, #00bcd4);
+}
+
+.forest-theme {
+    background: linear-gradient(45deg, #4CAF50, #8bc34a);
+}
+
+.sunset-theme {
+    background: linear-gradient(45deg, #FF9800, #f44336);
+}
+
+.midnight-theme {
+    background: linear-gradient(45deg, #9C27B0, #7b1fa2);
+}
+
+.modal-buttons {
+    margin-top: 2rem;
+}
+
+.modal-btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.modal-btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.modal-btn.primary:hover {
+    background-color: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.game-container {
+    display: flex;
+    gap: 2rem;
+    background-color: var(--container-bg);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+h1 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.score {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.level-info {
+    background-color: #f8f8f8;
+    padding: 1rem;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    color: var(--text-color);
+}
+
+.level-info > div:first-child {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.lines-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #ddd;
+}
+
+.lines-info div {
+    font-size: 1rem;
+}
+
+.direction-controls {
+    display: flex;
+    gap: 0.25rem;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.game-controls {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 0.5rem 0;
+}
+
+.game-controls button {
+    flex: 1;
+    padding: 0.5rem;
+    font-size: 1rem;
+}
+
+.high-score-form {
+    margin-top: 20px;
+    text-align: center;
+    color: white;
+}
+
+.high-score-form p {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-color);
+}
+
+.high-score-form input {
+    padding: 8px;
+    font-size: 1rem;
+    border: 2px solid var(--primary-color);
+    border-radius: 4px;
+    margin-right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.high-score-form button {
+    padding: 8px 16px;
+    font-size: 1rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.high-scores {
+    margin-top: 20px;
+    color: white;
+    text-align: center;
+}
+
+.high-scores h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.high-score-entry {
+    font-size: 1.2rem;
+    margin: 5px 0;
+    padding: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+button {
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button[onclick*="movePiece"] {
+    padding: 0.5rem 0.5rem;
+    min-width: 35px;
+    font-size: 1.1rem;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+}
+
+.instructions {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.instructions p {
+    margin: 0.5rem 0;
+}
+
+.game-board-container {
+    position: relative;
+    padding: 10px;
+    background: linear-gradient(145deg, #1a1a1a, #2a2a2a);
+    border-radius: 15px;
+    box-shadow: 
+        inset 0 0 10px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+.game-board {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid var(--board-border);
+    background-color: var(--board-bg);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.game-over-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    border-radius: 15px;
+}
+
+.pause-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    border-radius: 15px;
+}
+
+.game-over-text {
+    color: white;
+    font-size: 3rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 1.5s infinite;
+}
+
+.pause-text {
+    color: white;
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 4px;
+    background: linear-gradient(145deg, #ffffff33, #ffffff11);
+    pointer-events: none;
+}
+
+/* Flashing animation for cleared lines */
+@keyframes flash {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.cell[data-piece][data-flashing="true"] {
+    animation: flash 0.2s infinite;
+}
+
+/* Different colors for each piece type with 3D effect */
+.cell[data-piece="I"] {
+    background: linear-gradient(145deg, #00a0a0, #00FFFF);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="O"] {
+    background: linear-gradient(145deg, #a0a000, #FFFF00);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="T"] {
+    background: linear-gradient(145deg, #600060, #800080);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="L"] {
+    background: linear-gradient(145deg, #a06500, #FFA500);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="J"] {
+    background: linear-gradient(145deg, #0000a0, #0000FF);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="S"] {
+    background: linear-gradient(145deg, #00a000, #00FF00);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell[data-piece="Z"] {
+    background: linear-gradient(145deg, #a00000, #FF0000);
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Current piece colors with 3D effect and transparency */
+.cell.current[data-piece="I"] {
+    background: linear-gradient(145deg, #00a0a0, #00FFFF);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="O"] {
+    background: linear-gradient(145deg, #a0a000, #FFFF00);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="T"] {
+    background: linear-gradient(145deg, #600060, #800080);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="L"] {
+    background: linear-gradient(145deg, #a06500, #FFA500);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="J"] {
+    background: linear-gradient(145deg, #0000a0, #0000FF);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="S"] {
+    background: linear-gradient(145deg, #00a000, #00FF00);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.cell.current[data-piece="Z"] {
+    background: linear-gradient(145deg, #a00000, #FF0000);
+    opacity: 0.7;
+    box-shadow: 
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3),
+        inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Next pieces styling */
+.next-pieces {
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.next-pieces h3 {
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.next-piece {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--board-bg);
+    border-radius: 4px;
+    border: 1px solid var(--board-border);
+}
+
+.next-piece-row {
+    display: flex;
+    justify-content: center;
+}
+
+.next-piece-cell {
+    width: 15px;
+    height: 15px;
+    border-radius: 2px;
+    margin: 1px;
+}
+
+.next-piece-cell.filled {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Next piece colors */
+.next-piece-cell[data-piece="I"] {
+    background: linear-gradient(145deg, #00a0a0, #00FFFF);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="O"] {
+    background: linear-gradient(145deg, #a0a000, #FFFF00);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="T"] {
+    background: linear-gradient(145deg, #600060, #800080);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="L"] {
+    background: linear-gradient(145deg, #a06500, #FFA500);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="J"] {
+    background: linear-gradient(145deg, #0000a0, #0000FF);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="S"] {
+    background: linear-gradient(145deg, #00a000, #00FF00);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.next-piece-cell[data-piece="Z"] {
+    background: linear-gradient(145deg, #a00000, #FF0000);
+    box-shadow: 
+        inset 1px 1px 2px rgba(255, 255, 255, 0.3),
+        inset -1px -1px 2px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgba(255, 255, 255, 0.3);
+} 
